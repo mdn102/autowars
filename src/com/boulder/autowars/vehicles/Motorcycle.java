@@ -4,16 +4,17 @@ import com.google.gson.JsonObject;
 
 public class Motorcycle extends Vehicle {
 
-    int mpg = 50,
-        fuelCapacity = 5,
-        wheels = 2;
+    // Define subclass properties
+    int mpg;
 
-    public Motorcycle() {
-        super();
-    }
-
+    // Constructor (from JSON obj)
     public Motorcycle(JsonObject order) {
         super(order);
+
+        this.mpg = 50;
+
+        this.setFuelCapacity(5);
+        this.setWheels(2);
     }
 
 }
