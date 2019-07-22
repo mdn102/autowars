@@ -148,4 +148,25 @@ public class Dealership {
                 + v.getPrice()
                 + "!";
     }
+
+    // Select a vehicle to test drive
+    public Vehicle selectVehicleForTestDrive(int year, String make, String model) {
+        Vehicle vehicle = null;
+        boolean vehicleFound = false;
+
+        for (Vehicle v : this.carLot) {
+            if (!vehicleFound) {
+                if (v.getYear() == year && v.getMake().equals(make) && v.getModel().equals(model)) {
+                    vehicle = v;
+                    vehicleFound = true;
+                }
+            }
+        }
+
+        if (!vehicleFound) {
+            System.out.println("Sorry, we don't have a " + year + " " + make + " " + model + " in stock right now");
+        }
+
+        return vehicle;
+    }
 }
