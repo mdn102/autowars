@@ -9,7 +9,7 @@ import java.util.Date;
 public class Vehicle {
 
     private String type, vin, make, model, color, description;
-    private int year, wheels, mileage, fuel;
+    private int year, wheels, mileage, fuel, fuelCapacity;
     private BigDecimal price, costToDealership;
     private Date lastInsured, lastServiced;
     private boolean clean;
@@ -26,7 +26,6 @@ public class Vehicle {
         this.make = order.get("make").getAsString();
         this.model = order.get("model").getAsString();
         this.color = order.get("color").getAsString();
-        this.description = order.get("description").getAsString();
 
         this.year = order.get("year").getAsInt();
         this.wheels = order.get("wheels").getAsInt();
@@ -40,6 +39,13 @@ public class Vehicle {
         this.lastServiced = Date.from(Instant.parse(maintAndInsur.get("lastServiced").getAsString()));
 
         this.clean = order.get("clean").getAsBoolean();
+
+        this.description = this.year + " " + this.make + " " + this.model + " with only " + this.mileage + " miles";
+    }
+
+    // Check fuel level
+    public boolean checkFuel() {
+        return this.fuel > 5;
     }
 
     // Builder Class
@@ -214,6 +220,14 @@ public class Vehicle {
 
     public void setFuel(int fuel) {
         this.fuel = fuel;
+    }
+
+    public int getFuelCapacity() {
+        return fuelCapacity;
+    }
+
+    public void setFuelCapacity(int fuelCapacity) {
+        this.fuelCapacity = fuelCapacity;
     }
 
     public BigDecimal getPrice() {
