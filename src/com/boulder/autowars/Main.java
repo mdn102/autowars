@@ -22,8 +22,12 @@ public class Main {
         // Create a dealership and add vehicles to the lot
         Dealership dealership = new Dealership("Kat's Kool Kars", BigDecimal.valueOf(1000000));
         dealership.addToLot(readyToShip);
-        dealership.sellVehicle(dealership.carLot.get(15).getVin());
+        dealership.sellVehicle(dealership.getRandomVehicle().getVin());
         dealership.checkInsurance();
-        dealership.checkInsurance();
+        dealership.checkMaintenance();
+        dealership.getRandomVehicle().checkFuel();
+        dealership.refuel(dealership.getRandomVehicle());
+        dealership.salesPitch(dealership.getRandomVehicle());
+
     }
 }
