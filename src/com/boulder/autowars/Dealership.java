@@ -35,18 +35,20 @@ public class Dealership {
 
     // Sells a vehicle by vin and returns the dealership balance after sale
     public BigDecimal sellVehicle(String vin) {
+        Vehicle match = null;
         boolean found = false;
 
         for (Vehicle vehicle : this.carLot) {
             if (!found) {
                 if (vehicle.getVin().equals(vin)) {
-                    this.carLot.remove(vehicle);
+                    match = vehicle;
                     found = true;
                 }
             }
         }
 
         if (found) {
+            this.carLot.remove(match);
             System.out.println("Vehicle sold: " + vin);
         } else {
             System.out.println("No VIN match found: " + vin);
@@ -62,12 +64,29 @@ public class Dealership {
 
         for (Vehicle v : this.carLot) {
             LocalDate lastInsured = LocalDate.parse(v.getLastInsured().toString(), DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy"));
-            System.out.println(Utils.DateDiff.inDays(lastInsured, monthAgo));
+            int daysAgoLastInsured = Utils.DateDiff.inDays(lastInsured, monthAgo);
+
+            if (daysAgoLastInsured > 30) {
+                expired.add(v);
+                renewInsurance(v);
+            }
         }
 
         Vehicle[] result = new Vehicle[expired.size()];
         result = expired.toArray(result);
 
+        if (result.length == 0) {
+            System.out.println("All vehicles' insurance are up to date.");
+        } else {
+            System.out.println("Vehicle insurance renewed: " + result);
+        }
+
         return result;
+    }
+
+    // Renew a vehicle's insurance
+    public Vehicle renewInsurance(Vehicle v) {
+        v.setLastInsured(new Date());
+        return v;
     }
 }
