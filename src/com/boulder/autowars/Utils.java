@@ -31,7 +31,6 @@ public class Utils {
 
         public static int inDays(LocalDate d1, LocalDate d2) {
 
-            Period period = Period.between(d1, d2);
             int diff = (int) DAYS.between(d1, d2);
             System.out.println(diff);
             return diff;
