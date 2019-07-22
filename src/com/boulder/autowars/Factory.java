@@ -13,8 +13,11 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class Factory {
+
+    // Define props/methods
     String name;
 
+    // Constructor
     public Factory(String name) {
         this.name = name;
     }

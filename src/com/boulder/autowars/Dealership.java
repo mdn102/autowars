@@ -12,11 +12,13 @@ import java.util.Date;
 
 public class Dealership {
 
+    // Define properties/methods
     String name;
     BigDecimal balance;
     ArrayList<Vehicle> carLot = new ArrayList<>();
     ArrayList<String> salesHistory = new ArrayList<>();
 
+    // Constructor
     public Dealership(String name, BigDecimal startingBalance) {
         this.name = name;
         this.balance = startingBalance;
