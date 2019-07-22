@@ -8,6 +8,7 @@ import java.util.Date;
 
 public class Vehicle {
 
+    // Define properties/methods
     private String type, vin, make, model, color, description;
     private int year, wheels, mileage, fuel, fuelCapacity;
     private BigDecimal price, costToDealership;
@@ -284,8 +285,4 @@ public class Vehicle {
         this.clean = clean;
     }
 
-    // STATIC Getters and Setters
-    public static String getVin(Vehicle vehicle) {
-        return vehicle.getVin();
-    }
 }
