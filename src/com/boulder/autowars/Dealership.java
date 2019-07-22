@@ -14,7 +14,7 @@ public class Dealership {
 
     String name;
     BigDecimal balance;
-    ArrayList<Vehicle> carLot = new ArrayList<Vehicle>();
+    ArrayList<Vehicle> carLot = new ArrayList<>();
     ArrayList<String> salesHistory = new ArrayList<>();
 
     public Dealership(String name, BigDecimal startingBalance) {
@@ -35,13 +35,12 @@ public class Dealership {
 
     // Sells a vehicle by vin and returns the dealership balance after sale
     public BigDecimal sellVehicle(String vin) {
-        Vehicle desired = null;
         boolean found = false;
 
         for (Vehicle vehicle : this.carLot) {
             if (!found) {
                 if (vehicle.getVin().equals(vin)) {
-                    desired = vehicle;
+                    this.carLot.remove(vehicle);
                     found = true;
                 }
             }
