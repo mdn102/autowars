@@ -45,7 +45,21 @@ public class Vehicle {
 
     // Check fuel level
     public boolean checkFuel() {
+        if (this.fuel < 5) {
+            System.out.println("Vehicle low on fuel");
+        }
+
         return this.fuel > 5;
+    }
+
+    // Test drive vehicle
+    public void testDrive(int miles) {
+        if (miles > 5) {
+            this.mileage += miles;
+            this.fuel -= Math.ceil(miles / 10);
+        }
+
+        System.out.println("Vehicle test-driven");
     }
 
     // Builder Class
