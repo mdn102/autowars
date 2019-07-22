@@ -28,6 +28,6 @@ public class Main {
         dealership.getRandomVehicle().checkFuel();
         dealership.refuel(dealership.getRandomVehicle());
         dealership.salesPitch(dealership.getRandomVehicle());
-
+        System.out.println(dealership.selectVehicleForTestDrive(2002, "Toyota", "Camry"));
     }
 }
