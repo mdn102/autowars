@@ -16,13 +16,14 @@ public class Main {
 
         // Create a factory and and start building vehicles
         Factory factory = new Factory("GigaFactory 1");
-        String json = Utils.loadJson("/Users/caitlyngrennan/Desktop/Projects/auto-wars/src/vehicleData.json");
+        String json = Utils.loadJson("/Users/caitlyngrennan/Desktop/Projects/autowars/src/vehicleData.json");
         Vehicle[] readyToShip = factory.processOrders(json);
 
         // Create a dealership and add vehicles to the lot
         Dealership dealership = new Dealership("Kat's Kool Kars", BigDecimal.valueOf(1000000));
         dealership.addToLot(readyToShip);
         dealership.sellVehicle(dealership.carLot.get(15).getVin());
+        dealership.checkInsurance();
         dealership.checkInsurance();
     }
 }
