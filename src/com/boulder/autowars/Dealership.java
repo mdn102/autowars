@@ -22,6 +22,11 @@ public class Dealership {
         this.balance = startingBalance;
     }
 
+    // Pick a random vehicle in the dealership's lot
+    public Vehicle getRandomVehicle() {
+        return this.carLot.get(((int) Math.floor(Math.random() * this.carLot.size())));
+    }
+
     // Adds vehicles to the lot and returns the number of vehicles added
     public int addToLot(Vehicle[] vehicles) {
         for (Vehicle v : vehicles) {
@@ -29,7 +34,8 @@ public class Dealership {
             this.carLot.add(v);
         }
 
-        System.out.println("Vehicles added to lot: " + vehicles);
+        System.out.println("Vehicles added to lot: " + vehicles.length);
+
         return vehicles.length;
     }
 
@@ -57,14 +63,14 @@ public class Dealership {
         return this.balance;
     }
 
-    // Checks vehicle insurance and returns an array of Vehicles with expired insurance
+    // Check vehicle insurance, renew if necessary, return array of vehicles that had expired insurance
     public Vehicle[] checkInsurance() {
         ArrayList<Vehicle> expired = new ArrayList<>();
-        LocalDate monthAgo = LocalDate.now().minusDays(30);
+        LocalDate thirtyDaysAgo = LocalDate.now().minusDays(30);
 
         for (Vehicle v : this.carLot) {
             LocalDate lastInsured = LocalDate.parse(v.getLastInsured().toString(), DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy"));
-            int daysAgoLastInsured = Utils.DateDiff.inDays(lastInsured, monthAgo);
+            int daysAgoLastInsured = Utils.DateDiff.inDays(lastInsured, thirtyDaysAgo);
 
             if (daysAgoLastInsured > 30) {
                 expired.add(v);
@@ -76,17 +82,70 @@ public class Dealership {
         result = expired.toArray(result);
 
         if (result.length == 0) {
-            System.out.println("All vehicles' insurance are up to date.");
+            System.out.println("All vehicle insurance is up to date.");
         } else {
-            System.out.println("Vehicle insurance renewed: " + result);
+            System.out.println("Vehicle insurance renewed: " + result.length);
         }
 
         return result;
     }
 
-    // Renew a vehicle's insurance
+    // Renew a vehicle's insurance and return the updated vehicle
     public Vehicle renewInsurance(Vehicle v) {
         v.setLastInsured(new Date());
         return v;
+    }
+
+    // Check vehicle maintenance, get vehicle serviced if necessary, return array of vehicles that needed maintenance
+    public Vehicle[] checkMaintenance() {
+        ArrayList<Vehicle> overdue = new ArrayList<>();
+        LocalDate ninetyDaysAgo = LocalDate.now().minusDays(90);
+
+        for (Vehicle v : this.carLot) {
+            LocalDate lastServiced = LocalDate.parse(v.getLastServiced().toString(), DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy"));
+            int daysAgoLastServiced = Utils.DateDiff.inDays(lastServiced, ninetyDaysAgo);
+
+            if (daysAgoLastServiced > 90) {
+                overdue.add(v);
+                serviceVehicle(v);
+            }
+        }
+
+        Vehicle[] result = new Vehicle[overdue.size()];
+        result = overdue.toArray(result);
+
+        if (result.length == 0) {
+            System.out.println("All vehicle maintenance is up to date.");
+        } else {
+            System.out.println("Vehicles serviced: " + result.length);
+        }
+
+        return result;
+    }
+
+    // Service a vehicle and return the updated vehicle
+    public Vehicle serviceVehicle(Vehicle v) {
+        v.setLastServiced(new Date());
+        return v;
+    }
+
+    // Refuel a vehicle and return the updated vehicle
+    public Vehicle refuel(Vehicle v) {
+        v.setFuel(v.getFuelCapacity());
+
+        System.out.println("Vehicle refueled: " + v.getVin());
+
+        return v;
+    }
+
+    // Give a sales pitch for a vehicle
+    public String salesPitch(Vehicle v) {
+        return "Come on down to "
+                + this.name
+                + " n gitchurself a "
+                + v.getDescription()
+                + " for a stupidly affordable $"
+                + v.getPrice()
+                + "!";
     }
 }
