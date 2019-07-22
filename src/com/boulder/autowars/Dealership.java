@@ -163,10 +163,24 @@ public class Dealership {
             }
         }
 
-        if (!vehicleFound) {
+        if (vehicleFound) {
+            System.out.println("Vehicle selected for test drive: " + vehicle.getVin());
+            if (!vehicle.checkFuel()) {
+                this.refuel(vehicle);
+            }
+            if (!vehicle.isClean()) {
+                this.wash(vehicle);
+            }
+        } else {
             System.out.println("Sorry, we don't have a " + year + " " + make + " " + model + " in stock right now");
         }
 
         return vehicle;
+    }
+
+    // Wash a vehicle
+    public Vehicle wash(Vehicle v) {
+        v.setClean(true);
+        return v;
     }
 }
