@@ -2,10 +2,8 @@ package com.boulder.autowars;
 
 import com.boulder.autowars.vehicles.Vehicle;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class Main {
 
@@ -14,6 +12,8 @@ public class Main {
         System.out.println("Auto Wars");
         System.out.println("Loading...");
 
+        Scanner scanner = new Scanner(System.in);
+
         // Create a factory
         Factory factory = new Factory("GigaFactory 1");
 
@@ -21,36 +21,42 @@ public class Main {
         String json = Utils.loadJson("/Users/caitlyngrennan/Desktop/Projects/autowars/src/vehicleData.json");
 
         // Process the list of orders and build the vehicles
-        Vehicle[] readyToShip = factory.processOrders(json);
+        factory.readyToShip = factory.processOrders(json);
 
-        // Create a dealership and add vehicles to the lot
-        Dealership dealership = new Dealership("Kat's Kool Kars", BigDecimal.valueOf(1000000));
+        // Create a dealership
+        System.out.print("Enter the name of your new dealership: ");
+        Dealership dealership = new Dealership(scanner.nextLine(), BigDecimal.valueOf(1000000));
 
         // Add cars to dealership
-        dealership.addToLot(readyToShip);
+        System.out.println("Let's get some cars in that lot.");
+        System.out.println("How much would you like to spend? (Available: $" + dealership.balance + ")");
+        System.out.print("Maximum amount: ");
+
+        Vehicle[] purchased = dealership.purchaseVehicles(factory, scanner.nextBigDecimal());
+        dealership.addToLot(purchased);
 
         // Sell a vehicle
-        dealership.sellVehicle(dealership.getRandomVehicle().getVin());
+//        dealership.sellVehicle(dealership.getRandomVehicle().getVin());
 
         // Check and renew insurance of vehicles
-        dealership.checkInsurance();
+//        dealership.checkInsurance();
 
         // Check and renew maintenance of vehicles
-        dealership.checkMaintenance();
+//        dealership.checkMaintenance();
 
         // Check fuel level of a vehicle
-        dealership.getRandomVehicle().checkFuel();
+//        dealership.getRandomVehicle().checkFuel();
 
         // Refuel a vehicle
-        dealership.refuel(dealership.getRandomVehicle());
+//        dealership.refuel(dealership.getRandomVehicle());
 
         // Give a sales pitch
-        System.out.println(dealership.salesPitch(dealership.getRandomVehicle()));
+//        System.out.println(dealership.salesPitch(dealership.getRandomVehicle()));
 
         // Test drive a vehicle
-        Vehicle v = dealership.selectVehicleForTestDrive(2002, "Toyota", "Camry");
-        if (v != null) {
-            v.testDrive(20);
-        }
+//        Vehicle v = dealership.selectVehicleForTestDrive(2002, "Toyota", "Camry");
+//        if (v != null) {
+//            v.testDrive(20);
+//        }
     }
 }
