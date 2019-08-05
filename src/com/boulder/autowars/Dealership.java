@@ -3,11 +3,10 @@ package com.boulder.autowars;
 import com.boulder.autowars.vehicles.Vehicle;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 public class Dealership {
@@ -22,11 +21,36 @@ public class Dealership {
     public Dealership(String name, BigDecimal startingBalance) {
         this.name = name;
         this.balance = startingBalance;
+
+        System.out.println(this.name + " is open for business.");
+        System.out.println("Starting balance: " + NumberFormat.getCurrencyInstance().format(this.balance));
     }
 
     // Pick a random vehicle in the dealership's lot
     public Vehicle getRandomVehicle() {
         return this.carLot.get(((int) Math.floor(Math.random() * this.carLot.size())));
+    }
+
+    // Purchase vehicles with spending limit
+    public Vehicle[] purchaseVehicles(Factory factory, BigDecimal budget) {
+        ArrayList<Vehicle> purchased = new ArrayList<>();
+        BigDecimal totalCost = BigDecimal.ZERO;
+
+        for (Vehicle v : factory.readyToShip) {
+
+            if (budget.subtract(v.getCostToDealership()).compareTo(BigDecimal.valueOf(0)) > 0) {
+                purchased.add(v);
+                budget = budget.subtract(v.getCostToDealership());
+                totalCost = totalCost.add(v.getCostToDealership());
+            }
+
+        }
+
+        this.balance = this.balance.subtract(totalCost);
+
+        System.out.println(purchased.size() + " vehicles added to lot. | Total cost: " + totalCost + " | Remaining balance: " + this.balance);
+
+        return purchased.toArray(new Vehicle[0]);
     }
 
     // Adds vehicles to the lot and returns the number of vehicles added
@@ -56,8 +80,12 @@ public class Dealership {
         }
 
         if (found) {
+            System.out.println("Vehicle sold: " + match.getYear() + " " + match.getMake() + " " + match.getModel());
+            System.out.println("VIN: " + vin);
+            System.out.println("Net profit: " + (match.getPrice().subtract(match.getCostToDealership())));
+            System.out.println("Buyer: " + null);
+
             this.carLot.remove(match);
-            System.out.println("Vehicle sold: " + vin);
         } else {
             System.out.println("No VIN match found: " + vin);
         }
@@ -67,6 +95,8 @@ public class Dealership {
 
     // Check vehicle insurance, renew if necessary, return array of vehicles that had expired insurance
     public Vehicle[] checkInsurance() {
+        System.out.println("Checking insurance for all vehicles...");
+
         ArrayList<Vehicle> expired = new ArrayList<>();
         LocalDate thirtyDaysAgo = LocalDate.now().minusDays(30);
 
@@ -86,7 +116,7 @@ public class Dealership {
         if (result.length == 0) {
             System.out.println("All vehicle insurance is up to date.");
         } else {
-            System.out.println("Vehicle insurance renewed: " + result.length);
+            System.out.println("Vehicle insurance policies renewed: " + result.length);
         }
 
         return result;
@@ -100,6 +130,8 @@ public class Dealership {
 
     // Check vehicle maintenance, get vehicle serviced if necessary, return array of vehicles that needed maintenance
     public Vehicle[] checkMaintenance() {
+        System.out.println("Checking maintenance for all vehicles...");
+
         ArrayList<Vehicle> overdue = new ArrayList<>();
         LocalDate ninetyDaysAgo = LocalDate.now().minusDays(90);
 
