@@ -34,7 +34,7 @@ public class Vehicle {
         this.fuel = order.get("fuel").getAsInt();
 
         this.price = order.get("price").getAsBigDecimal();
-        this.costToDealership = order.get("costToDealership").getAsBigDecimal();
+        this.costToDealership = order.get("price").getAsBigDecimal().multiply(BigDecimal.valueOf(0.8));
 
         this.lastInsured = Date.from(Instant.parse(maintAndInsur.get("lastInsured").getAsString()));
         this.lastServiced = Date.from(Instant.parse(maintAndInsur.get("lastServiced").getAsString()));
