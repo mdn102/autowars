@@ -9,22 +9,25 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 public class Factory {
 
     // Define props/methods
     String name;
+    Vehicle[] readyToShip;
 
     // Constructor
     public Factory(String name) {
         this.name = name;
+        System.out.println(name + " ready for production.");
     }
 
     // Build a series of vehicles from a json array of objects
     Vehicle[] processOrders(String json) {
         JsonArray orders = new JsonParser().parse(json).getAsJsonArray();
+        System.out.println("Orders received: " + orders.size());
+
         ArrayList<Vehicle> vehicles = new ArrayList<>();
 
         for (int i = 0; i < orders.size(); i++) {
@@ -43,7 +46,7 @@ public class Factory {
             vehicles.add(vehicle);
         }
 
-        System.out.println("Orders Processed: " + Arrays.deepToString(vehicles.toArray()));
+        System.out.println("Vehicles ready to ship: " + vehicles.size());
         return vehicles.toArray(new Vehicle[0]);
     }
 
