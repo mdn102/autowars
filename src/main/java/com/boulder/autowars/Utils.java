@@ -1,9 +1,12 @@
 package com.boulder.autowars;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import static java.time.temporal.ChronoUnit.*;
 
@@ -14,7 +17,8 @@ public class Utils {
         String json = null;
 
         try {
-            json = new String(Files.readAllBytes(Paths.get(url)));
+            Path path = Paths.get(Objects.requireNonNull(Utils.class.getClassLoader().getResource("vehicleData.json")).getPath());
+            json = new String(Files.readAllBytes(path));
         } catch (IOException e) {
             e.printStackTrace();
         }

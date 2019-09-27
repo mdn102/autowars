@@ -18,7 +18,7 @@ public class Main {
         Factory factory = new Factory("GigaFactory 1");
 
         // Obtain a list of vehicle orders
-        String json = Utils.loadJson("/Users/caitlyngrennan/Desktop/Projects/autowars/src/vehicleData.json");
+        String json = Utils.loadJson("main/resources/vehicleData.json");
 
         // Process the list of orders and build the vehicles
         factory.readyToShip = factory.processOrders(json);
