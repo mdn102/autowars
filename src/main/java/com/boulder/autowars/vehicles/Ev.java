@@ -4,6 +4,14 @@ import com.google.gson.JsonObject;
 
 public class Ev extends Vehicle {
 
+    public int getMpkWh() {
+        return mpkWh;
+    }
+
+    public void setMpkWh(int mpkWh) {
+        this.mpkWh = mpkWh;
+    }
+
     // Define subclass properties
     int mpkWh = 5;
 

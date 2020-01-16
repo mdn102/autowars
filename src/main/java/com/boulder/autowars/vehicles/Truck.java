@@ -5,7 +5,17 @@ import com.google.gson.JsonObject;
 public class Truck extends Vehicle {
 
     // Define subclass properties
-    int mpg, towingCapacity;
+    int mpg;
+
+    public int getTowingCapacity() {
+        return towingCapacity;
+    }
+
+    public void setTowingCapacity(int towingCapacity) {
+        this.towingCapacity = towingCapacity;
+    }
+
+    int towingCapacity;
 
     // Constructor (from JSON obj)
     public Truck(JsonObject order) {
