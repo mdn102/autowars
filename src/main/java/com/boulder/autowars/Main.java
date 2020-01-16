@@ -1,5 +1,7 @@
 package com.boulder.autowars;
 
+import com.boulder.autowars.vehicles.Ev;
+import com.boulder.autowars.vehicles.Truck;
 import com.boulder.autowars.vehicles.Vehicle;
 
 import java.math.BigDecimal;
@@ -18,10 +20,13 @@ public class Main {
         Factory factory = new Factory("GigaFactory 1");
 
         // Obtain a list of vehicle orders
-        String json = Utils.loadJson("main/resources/vehicleData.json");
+        String json = Utils.loadJson();
 
         // Process the list of orders and build the vehicles
         factory.readyToShip = factory.processOrders(json);
+
+        System.out.println( ((Truck) factory.readyToShip[3]).getTowingCapacity());
+
 
         // Create a dealership
         System.out.print("Enter the name of your new dealership: ");
@@ -34,6 +39,8 @@ public class Main {
 
         Vehicle[] purchased = dealership.purchaseVehicles(factory, scanner.nextBigDecimal());
         dealership.addToLot(purchased);
+
+
 
         // Sell a vehicle
 //        dealership.sellVehicle(dealership.getRandomVehicle().getVin());
