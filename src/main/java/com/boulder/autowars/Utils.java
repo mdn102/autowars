@@ -13,7 +13,7 @@ import static java.time.temporal.ChronoUnit.*;
 public class Utils {
 
     // Load a JSON file and return it as a string
-    public static String loadJson(String url) {
+    public static String loadJson() {
         String json = null;
 
         try {
